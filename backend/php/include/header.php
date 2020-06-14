@@ -18,6 +18,8 @@ require_once baseDir . 'backend/php/classes/db.class.php';
 require_once baseDir . 'backend/php/classes/config.class.php';
 require_once baseDir . 'backend/php/classes/api.class.php';
 require_once baseDir . 'backend/php/classes/menu.class.php';
+require_once baseDir . 'backend/php/classes/atpco.class.php';
+require_once baseDir . 'backend/php/classes/covidcontrols.class.php';
 require_once baseDir . 'backend/php/classes/settings.class.php';
 
 require_once baseDir . 'backend/php/classes/template/template.class.php';

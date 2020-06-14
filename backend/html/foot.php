@@ -28,5 +28,16 @@
     	
 	}
 	?>
+	<script type="text/javascript">
+	$(document).ready( function () {
+	    $('#countryTable').DataTable({
+		    "order": [[ 1, "asc" ]],
+		     "pageLength": 50
+	    });
+	    
+	         $('[data-toggle="tooltip"]').tooltip()
+
+	} );	
+	</script>
   </body>
 </html>

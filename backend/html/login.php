@@ -46,11 +46,11 @@
                     <form method="post">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="username" value="<?= isset ($_POST['username']) ? $_POST['username'] : '' ?>">
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="username" value="<?= isset ($_POST['username']) ? $_POST['username'] : 'travelmanager@getroadmap.com' ?>">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" value="NikeTravelManager">
                       </div>
                       <div class="form-group mb-3 d-table mx-auto">
                         <div class="custom-control custom-checkbox mb-1">

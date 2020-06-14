@@ -17,27 +17,7 @@ if (!isset ($_GET['action'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset ($_POST['action']) && $_POST['action'] == 'add') {
     
-    $page = new Page;
-    
-    $page->setPostData ($_POST);
-    
-    if ($p = $page->save ()) {
-        
-        header ('HTTP/1.1 301 Moved Permanently');
-        header ('Location: ' . baseHref . $_GET['route'] .'.html?action=corporate&id='. $p->id .'&state=success');
-        exit;
-        
-    } else {
-        
-        $_SESSION['error'] = $page->errMsg;
-        $_SESSION['formData'] = $_POST;
-        
-        header ('HTTP/1.1 301 Moved Permanently');
-        header ('Location: '. baseHref . $_GET['route'] .'.html?action='. $_GET['action'] .'&state=error');
-        exit;
-        
-    }
-    
+  
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset ($_POST['action']) && $_POST['action'] == 'corporate' && isset ($_GET['id'])) {
@@ -92,8 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset ($_POST['action']) && $_POST['
 
 if (isset ($_GET['change']) && $_GET['change'] == 'toggle' && isset ($_GET['id'])) 
 {
-        $page = new Page ($_GET['id']);
-        $page->setActive ();
     
         
         header ('HTTP/1.1 301 Moved Permanently');
@@ -103,8 +81,6 @@ if (isset ($_GET['change']) && $_GET['change'] == 'toggle' && isset ($_GET['id']
 
 if (isset ($_GET['change']) && $_GET['change'] == 'delete' && isset ($_GET['id'])) 
 {
-        $page = new Page ($_GET['id']);
-        $page->delete ();
     
         
         header ('HTTP/1.1 301 Moved Permanently');
@@ -136,9 +112,13 @@ if (isset ($_GET['search']))
 	    
 		require_once baseDir . 'backend/php/pages/policy/partners.php';
                 
+    } else if ($_GET['action'] == 'country') {
+	    
+		require_once baseDir . 'backend/php/pages/policy/countries.php';
+                
     } else if ($_GET['action'] == 'add') {
         
-        $Page = new Page ();
+        $Page = [];
         
 ?>
     <!-- begin row -->

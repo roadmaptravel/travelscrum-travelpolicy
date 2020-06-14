@@ -6102,3 +6102,17 @@ html .ql-toolbar {
 .travel-bookings .material-icons {
 	font-size: 1.3rem;
 }
+
+.virus-viz--recovered {
+    stroke: rgb(69, 170, 84);
+}
+.virus-viz {
+    stroke-width: 1;
+    fill: none;
+}
+
+.tooltip-inner {
+    max-width: 350px;
+    /* If max-width does not work, try using width instead */
+    width: 350px; 
+}

@@ -56,15 +56,6 @@ if (isset ($_GET['edit'])) {
 	}
 
         
-        $Page = new Page ($_GET['edit']);
-        
-        if (!$Page) {
-            
-            header ('HTTP/1.1 301 Moved Permanently');
-            header ('Location: '. baseHref . $_GET['route'] . '.html');
-            exit;
-            
-        }
         
         if (isset ($_GET['success'])) {
 	        ?>

@@ -463,22 +463,92 @@ Sincerely,
         echo App::tinyMCE ('contentField');
         
 } else {
+	
+	// At this moment, we need to provide a valid flight number + date in order to get everything... 
+	$supportedAirlines = array ();
+	
+	$supportedAirlines[] = array (
+		'name' => 'British Airways',
+		'dep' => 'JFK',
+		'arr' => 'LHR',
+		'carrier' => 'BA',
+		'flight' => '114',
+		'date' => '2020-06-22',
+		'accepted' => true
+	);
+	
+	$supportedAirlines[] = array (
+		'name' => 'KLM',
+		'dep' => 'JFK',
+		'arr' => 'AMS',
+		'carrier' => 'KL',
+		'flight' => '646',
+		'date' => '2020-06-22',
+		'accepted' => true
+	);
+	
+	$supportedAirlines[] = array (
+		'name' => 'Delta',
+		'dep' => 'ATL',
+		'arr' => 'AMS',
+		'carrier' => 'DL',
+		'flight' => '72',
+		'date' => '2020-06-22',
+		'accepted' => true
+	);
+	
+	$supportedAirlines[] = array (
+		'name' => 'United Airlines',
+		'dep' => 'EWR',
+		'arr' => 'AMS',
+		'carrier' => 'UA',
+		'flight' => '70',
+		'date' => '2020-06-22',
+		'accepted' => false
+	);
+	
+	$supportedHotels = array ();
+	
+	$supportedHotels[] = array (
+		'name' => 'Hilton',
+		'date' => '2020-06-22',
+		'accepted' => true,
+		'desc' => 'Hilton has developed a global program that will introduce a new standard of hotel cleanliness and disinfection to ensure Hilton guests enjoy an even cleaner and safer stay: Hilton CleanStay with Lysol protection. The program has been developed with experts from RB, maker of Lysol and Dettol, brands trusted for safely disinfecting surfaces. In addition, experts from the Infection Prevention and Control team at Mayo Clinic will advise and assist in enhancing Hilton’s cleaning disinfection protocols.',
+		'link' => 'https://www.hilton.com/en/corporate/coronavirus/'
+	);
+	
+	$supportedHotels[] = array (
+		'name' => 'Hyatt',
+		'date' => '2020-06-22',
+		'accepted' => true,
+		'desc' => 'Hyatt’s Global Care & Cleanliness Commitment is an important expression of our purpose to care for people so they can be their best—now and in the future. We want every Hyatt guest and colleague to feel confident that each aspect of our commitment is designed with safety and wellbeing in mind.',
+		'link' => 'https://www.hyatt.com/info/global-care-and-cleanliness-commitment'
+	);
+	
+	$supportedHotels[] = array (
+		'name' => 'IHG',
+		'date' => '2020-06-22',
+		'accepted' => false,
+		'desc' => 'All our hotels are required to adhere to comprehensive health and safety procedures, including all local laws. In addition, we provide our hotels with best practices and guidelines and have supplemented these resources with additional COVID-19 cleanliness specific guidance, training and information, consistent with our own high standards.',
+		'link' => 'https://www.ihg.com/content/gb/en/customer-care/travel-advisory'
+	);
+	
+	$supportedHotels[] = array (
+		'name' => 'CitizenM',
+		'date' => '2020-06-22',
+		'accepted' => true,
+		'desc' => 'We are thoroughly cleaning and disinfecting all our hotels using a 75% alcohol-based disinfectant. Guest rooms are cleaned and disinfected after every use. Public restrooms and elevators are cleaned every hour; living rooms and canteenMs six times a day. societyM meeting rooms are cleaned and disinfected after every use. We are paying particular attention to high-touch areas like door handles, buttons, canteenM tables and light switches.',
+		'link' => 'https://www.citizenm.com/contentpages/covid-19-information'
+	);
+	
+	$atpco = new ClassATPCO ('hfo0mivxrla1cyj3t5q6kz7wbpsgn84d');
+	
 ?>
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
               <div class="col">
                 <span class="text-uppercase page-subtitle">Travel Policy</span>
-                <h3 class="page-title">Policy Overview</h3>
-              </div>
-              <div class="col d-flex">
-                <div class="btn-group btn-group-sm d-inline-flex ml-auto my-auto" role="group" aria-label="Table row actions">
-                  <a href="file-manager-list.html" class="btn btn-white active">
-                    <i class="material-icons">&#xE8EF;</i>
-                  </a>
-                  <a href="file-manager-cards.html" class="btn btn-white">
-                    <i class="material-icons">&#xE8F0;</i>
-                  </a>
-                </div>
+                <h3 class="page-title">Trusted Partners</h3>
               </div>
             </div>
             <!-- End Page Header -->
@@ -486,162 +556,187 @@ Sincerely,
               <div class="col-lg-12 mb-4">
                 <div class="card card-small lo-stats">
                   <div class="card-header border-bottom">
-                    <h6 class="m-0">Travelers about to go to risk countries</h6>
+                    <h6 class="m-0">Trusted Airline partners</h6>
                     <div class="block-handle"></div>
                   </div>
                   <div class="card-body p-0">
                       <table class="table mb-0 travel-bookings">
+	                      <colgroup>
+	                      	<col />
+	                      	<col style="width: 10%"; />
+	                      	<col />
+	                      	<col style="width: 60%;" />
+	                      	<col style="width: 10%;" />
+	                      	<col />
+	                      </colgroup>
                         <thead class="py-2 bg-light text-semibold border-bottom">
                           <tr>
                             <th>Details</th>
                             <th></th>
                             <th class="text-center">Status</th>
-                            <th class="text-center">Infection risk score</th>
-                            <th class="text-center">Carbon footprint</th>
-                            <th class="text-center">Applied Policy</th>
-                            <th class="text-center">Completed checklist</th>
+                            <th class="text-left">COVID Info</th>
+                            <th class="text-center"></th>
                             <th class="text-right">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
+	                        <?php
+		                        foreach ($supportedAirlines as $item):
+		                        
+		                        	$data = $atpco->getUPAs ($item['dep'], $item['arr'], $item['carrier'], $item['flight'], $item['date']);
+		                    ?>
                           <tr>
                             <td class="lo-stats__image">
-                              <img class="border rounded" src="assets/images/ib.png">
+                              <img class="border rounded" src="assets/images/<?= strtolower ($item['carrier']) ?>.png">
                             </td>
                             <td class="lo-stats__order-details">
-                              <span>Trip to China</span>
-                              <span>Traveler: Aurelie Krau</span>
-                              <span>15 June - 22 June 2020</span>
+                              <span><?= $item['name'] ?></span>
+                              <span>Date checked: <?= $item['date'] ?></span>
                             </td>
                             <td class="lo-stats__status">
                               <div class="d-table mx-auto">
+	                              <?php
+		                              if (!$item['accepted']):
+		                           ?>
 	                              <span class="badge badge-pill badge-danger">Rejected</span>
+	                              <?php
+		                              else:
+		                          ?>
+		                          <span class="badge badge-pill badge-success">Accepted</span>
+		                          <?php
+			                          endif;
+			                      ?>
                               </div>
                             </td>
-                            <td class="lo-stats__items text-center text-danger">88/100</td>
-                            <td class="lo-stats__items text-center"><span class="text-warning">9.23 tonnes</span><br /><small>Reason: long flight</small></td>
-                            <td class="lo-stats__items text-center">2</td>
-                            <td class="lo-stats__items text-center"><i class="material-icons text-danger">warning</i></td>
+                            <td class="lo-stats__items text-left">
+	                            <?php
+		                            $descDone = array ();
+		                            
+		                            foreach ($data as $row):
+		                            
+		                            	if (in_array ($row['desc'], $descDone))
+		                            		continue;
+		                            
+		                            	echo '- '. $row['desc'] .'<br />';
+		                            
+										$descDone[] = $row['desc'];
+		                            
+		                            endforeach;
+		                        ?>
+                            </td>
+                            <td class="lo-stats__items text-center"><span class="text-warning"></span></td>
                             <td class="lo-stats__actions">
                               <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-white">view checklist</button>
+	                               <?php
+		                              if (!$item['accepted']):
+		                           ?>
+	                              <button type="button" class="btn btn-sm btn-success">Accept airline</button>
+	                              <?php
+		                              else:
+		                          ?>
+		                          <button type="button" class="btn btn-sm btn-danger">Reject airline</button>
+		                          <?php
+			                          endif;
+			                      ?>
+                                
                               </div>
                             </td>
                           </tr>
                           <?php
-	                          if (isset ($_GET['approve'])):
-	                       ?>
-                          <tr class="alert-success">
-                            <td class="lo-stats__image">
-	                            <a name="approved"></a>
-                              <img class="border rounded" src="assets/images/ib.png">
-                            </td>
-                            <td class="lo-stats__order-details">
-                              <span>Trip to New York</span>
-                              <span>Traveler: Micha van Eijk</span>
-                              <span style="color: #fff;">16 June - 22 June 2020</span>
-                            </td>
-                            <td class="lo-stats__status">
-                              <div class="d-table mx-auto">
-                                <span class="badge badge-pill badge-success">Approved</span>
-                              </div>
-                            </td>
-                            <td class="lo-stats__items text-center text-warning">54/100</td>
-                            <td class="lo-stats__items text-center text-green">0.81 tonnes</td>
-                            <td class="lo-stats__items text-center">4</td>
-                            <td class="lo-stats__items text-center"><i class="material-icons text-success">check</i></td>
-                            <td class="lo-stats__actions">
-                              <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-white">view checklist</button>
-                              </div>
-                            </td>
-                          </tr>
-                          <?php
-	                          else:
+	                          endforeach;
 	                      ?>
-                          <tr>
-                            <td class="lo-stats__image">
-                              <img class="border rounded" src="assets/images/ib.png">
-                            </td>
-                            <td class="lo-stats__order-details">
-                              <span>Trip to New York</span>
-                              <span>Traveler: Micha van Eijk</span>
-                              <span>16 June - 22 June 2020</span>
-                            </td>
-                            <td class="lo-stats__status">
-                              <div class="d-table mx-auto">
-                                <span class="badge badge-pill badge-warning">Pending approval</span>
-                              </div>
-                            </td>
-                            <td class="lo-stats__items text-center text-warning">54/100</td>
-                            <td class="lo-stats__items text-center text-success">0.81 tonnes</td>
-                            <td class="lo-stats__items text-center">4</td>
-                            <td class="lo-stats__items text-center"><i class="material-icons text-success">check</i></td>
-                            <td class="lo-stats__actions">
-                              <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                <a href="?approve#approved" class="btn btn-sm btn-success">Approve</a>
-                                <a href="?reject#approved" class="btn btn-sm btn-danger">Reject</a>
-                              </div>
-                            </td>
-                          </tr>
-                          <?php
-	                          endif;
-	                      ?>
-                          <tr>
-                            <td class="lo-stats__image">
-                              <img class="border rounded" src="assets/images/ba.png">
-                            </td>
-                            <td class="lo-stats__order-details">
-                              <span>Trip to London</span>
-                              <span>Traveler: Gaby Verwegen</span>
-                              <span>22 June 2020 20:32</span>
-                            </td>
-                            <td class="lo-stats__status">
-                              <div class="d-table mx-auto">
-                                <span class="badge badge-pill badge-success">Approved</span>
-                              </div>
-                            </td>
-                            <td class="lo-stats__items text-center text-success">26/100</td>
-                            <td class="lo-stats__items text-center text-success">0.09 tonnes</td>
-                            <td class="lo-stats__items text-center">2</td>
-                            <td class="lo-stats__items text-center"><i class="material-icons text-success">check</i></td>
-                            <td class="lo-stats__actions">
-                              <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-white">view checklist</button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="lo-stats__image">
-                              <img class="border rounded" src="assets/images/kl.png">
-                            </td>
-                            <td class="lo-stats__order-details">
-                              <span>Trip to Sydney</span>
-                              <span>Traveler: Rogier Verkaik</span>
-                              <span>22 June - 29 June 2020</span>
-                            </td>
-                            <td class="lo-stats__status">
-                              <div class="d-table mx-auto">
-                                <span class="badge badge-pill badge-success">Approved</span>
-                              </div>
-                            </td>
-                            <td class="lo-stats__items text-center text-success">33/100</td>
-                            <td class="lo-stats__items text-center"><span class="text-danger">9.23 tonnes</span><br /><small>Reason: first class</small></td>
-                            <td class="lo-stats__items text-center">5</td>
-                            <td class="lo-stats__items text-center"><i class="material-icons text-success">check</i></td>
-                            <td class="lo-stats__actions">
-                              <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-white">view checklist</button>
-                              </div>
-                            </td>
-                          </tr>
                         </tbody>
                       </table>
 
                   </div>
                 </div>
               </div>
+              
+              <div class="col-lg-12 mb-4">
+                <div class="card card-small lo-stats">
+                  <div class="card-header border-bottom">
+                    <h6 class="m-0">Trusted Hotel partners</h6>
+                    <small>Hotel data is mock - there are no APIs returning this data</small>
+                    <div class="block-handle"></div>
+                  </div>
+                  <div class="card-body p-0">
+                      <table class="table mb-0 travel-bookings">
+	                      <colgroup>
+	                      	<col />
+	                      	<col style="width: 10%"; />
+	                      	<col />
+	                      	<col style="width: 60%;" />
+	                      	<col style="width: 10%;" />
+	                      	<col />
+	                      </colgroup>
+                        <thead class="py-2 bg-light text-semibold border-bottom">
+                          <tr>
+                            <th>Details</th>
+                            <th></th>
+                            <th class="text-center">Status</th>
+                            <th class="text-left">COVID Info</th>
+                            <th class="text-center"></th>
+                            <th class="text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+	                        <?php
+		                        foreach ($supportedHotels as $item):
+		                    ?>
+                          <tr>
+                            <td class="lo-stats__image">
+                              <img class="border rounded" src="assets/images/<?= strtolower ($item['name']) ?>.png">
+                            </td>
+                            <td class="lo-stats__order-details">
+                              <span><?= $item['name'] ?></span>
+                              <span>Date checked: <?= $item['date'] ?></span>
+                            </td>
+                            <td class="lo-stats__status">
+                              <div class="d-table mx-auto">
+	                              <?php
+		                              if (!$item['accepted']):
+		                           ?>
+	                              <span class="badge badge-pill badge-danger">Rejected</span>
+	                              <?php
+		                              else:
+		                          ?>
+		                          <span class="badge badge-pill badge-success">Accepted</span>
+		                          <?php
+			                          endif;
+			                      ?>
+                              </div>
+                            </td>
+                            <td class="lo-stats__items text-left"><?= $item['desc'] ?></td>
+                            <td class="lo-stats__items text-center"><a href="<?= $item['link'] ?>" target="_blank">More information</a></td>
+                            <td class="lo-stats__actions">
+                              <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
+	                               <?php
+		                              if (!$item['accepted']):
+		                           ?>
+	                              <button type="button" class="btn btn-sm btn-success">Accept hotel</button>
+	                              <?php
+		                              else:
+		                          ?>
+		                          <button type="button" class="btn btn-sm btn-danger">Reject hotel</button>
+		                          <?php
+			                          endif;
+			                      ?>
+                                
+                              </div>
+                            </td>
+                          </tr>
+                          <?php
+	                          endforeach;
+	                      ?>
+                        </tbody>
+                      </table>
+
+                  </div>
+                </div>
+              </div>
+
             </div>
+            
 <?php	
 }
 ?>
