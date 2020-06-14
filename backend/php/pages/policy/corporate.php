@@ -1,4 +1,7 @@
 <?php
+$json = file_get_contents (baseDir . '/data/travelpolicy.json');
+
+$travelPolicyData = json_decode ($json, true)['result'];
 	 
 if (isset ($_GET['edit'])) {
 
@@ -42,18 +45,19 @@ if (isset ($_GET['edit'])) {
 	    $outputJson['air']['airFares'] 		= $airFares;
 	    $outputJson['air']['cabinClasses'] 	= $cabinClasses;
 	    $outputJson['transportOptions'] 			= $transportOptions;
+	    $outputJson['healthKit'] 			= $_POST['healthKit'];
+	    $outputJson['policyText'] 			= $_POST['policyText'];
 	    
 	    $outputJson = array ('result' => $outputJson);
 	    
 	    file_put_contents (baseDir . '/data/travelpolicy.json', json_encode ($outputJson));
 	    
-	    var_dump ('yolo');
-	    exit;
 	    header ('HTTP/1.1 301 Moved Permanently');
 	    header ('Location: travelpolicy.html?action=corporate&edit=1&success');
 	    exit;
 	    
 	}
+	
 
         
         
@@ -97,40 +101,40 @@ if (isset ($_GET['edit'])) {
 					   		<div class="input-group col-md-4">
 								<fieldset>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
-										<label class="custom-control-label" for="formsCheckboxDefault">Exhibitions &amp; fairs</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault1">
+										<label class="custom-control-label" for="formsCheckboxDefault1">Exhibitions &amp; fairs</label>
 									</div>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxChecked" checked>
-										<label class="custom-control-label" for="formsCheckboxChecked">Customer meetings</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxChecked2" checked>
+										<label class="custom-control-label" for="formsCheckboxChecked2">Customer meetings</label>
 									</div>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
-										<label class="custom-control-label" for="formsCheckboxDefault">Internal meetings</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault3">
+										<label class="custom-control-label" for="formsCheckboxDefault3">Internal meetings</label>
 									</div>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
-										<label class="custom-control-label" for="formsCheckboxDefault">Conferences</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault4">
+										<label class="custom-control-label" for="formsCheckboxDefault4">Conferences</label>
 									</div>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
-										<label class="custom-control-label" for="formsCheckboxDefault">Corporate events</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault5">
+										<label class="custom-control-label" for="formsCheckboxDefault5">Corporate events</label>
 									</div>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
-										<label class="custom-control-label" for="formsCheckboxDefault">Recruitment</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault6">
+										<label class="custom-control-label" for="formsCheckboxDefault6">Recruitment</label>
 									</div>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
-										<label class="custom-control-label" for="formsCheckboxDefault">Consultancy</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault7">
+										<label class="custom-control-label" for="formsCheckboxDefault7">Consultancy</label>
 									</div>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
-										<label class="custom-control-label" for="formsCheckboxDefault">Sales</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault8">
+										<label class="custom-control-label" for="formsCheckboxDefault8">Sales</label>
 									</div>
 									<div class="custom-control custom-checkbox mb-1">
-										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
-										<label class="custom-control-label" for="formsCheckboxDefault">Maintenance/engineering</label>
+										<input type="checkbox" class="custom-control-input" id="formsCheckboxDefault9">
+										<label class="custom-control-label" for="formsCheckboxDefault9">Maintenance/engineering</label>
 									</div>
 								</fieldset>
 	                        </div>
@@ -140,12 +144,11 @@ if (isset ($_GET['edit'])) {
 	                    	<div class="col-md-3">Providing of health kit</div>
 	                    	
 					   		<div class="input-group col-md-4">
-                                <select id="inputState" class="form-control">
-									<option value="office">Yes, pick up at office</option>
-									<option value="airpport">Yes, pick up at airport</option>
-									<option value="delivered" selected>Yes, delivered to home address</option>
-									<option value="no">No</option>
-									<option value="other">Other:</option>
+                                <select id="inputState" name="healthKit" class="form-control">
+									<option value="office" <?= $travelPolicyData['healthKit'] == 'office' ? ' selected="selected"' : '' ?>>Yes, pick up at office</option>
+									<option value="airport" <?= $travelPolicyData['healthKit'] == 'airport' ? ' selected="selected"' : '' ?>>Yes, pick up at airport</option>
+									<option value="delivered" <?= $travelPolicyData['healthKit'] == 'delivered' ? ' selected="selected"' : '' ?>>Yes, delivered to home address</option>
+									<option value="no" <?= $travelPolicyData['healthKit'] == 'no' ? ' selected="selected"' : '' ?>>No</option>
                                 </select>
 	                        </div>
                       </div>
@@ -162,7 +165,7 @@ if (isset ($_GET['edit'])) {
 	                        </div>
 	                        
 	                        <div class="col-md-5">
-		                        <textarea class="form-control" rows="10">To whom it may concern:
+		                        <textarea class="form-control" rows="10" name="policyText">To whom it may concern:
 
 This letter is provided as evidence that the carrier of this letter, [[employee_name]], is a Nike employee and, as such, an employee of an essential business. The employee is providing essential work to support Nike's delivery of critical supplies directly to the doorsteps of people who need them. As such, this employee is exempt from mobility restrictions when reporting to or returning from work, or while performing their job duties.
 

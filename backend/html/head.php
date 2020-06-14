@@ -21,15 +21,7 @@
 		        'partners' => 'Trusted Partners',
 		        'country' => 'Country Specific'
 	        )
-	    ),
-	    'product' => array (
-	        'title'         => 'Approve Travel',
-	        'moduleFile'    => 'webshop/product.php',
-	        'custom'        => false,
-	        'icon'          => 'supervisor_account',
-	        'javascript'    => 'webshop.product',
-	        'submenu' => false
-	    )    
+	    )
 	);
 } else {
 	
